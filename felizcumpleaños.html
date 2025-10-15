@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Cumpleaños Susana 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      padding: 50px;
+      position: relative;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* 🌸 Fondo con tu imagen en Base64 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("hh.jpg") no-repeat center center fixed;
+  background-size: cover;
+  opacity: 0.85;
+  z-index: -2;
+}
+
+
+    /* 🎊 Confeti */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    h1 {
+      color: #ff4081;
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px #ffc1e3;
+    }
+
+    button {
+      background-color: #ff80ab;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #f50057;
+      transform: scale(1.05);
+    }
+
+    #carta {
+      display: none;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 30px;
+      margin-top: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1.1em;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    #carta.mostrar {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <!-- 🎊 Confeti -->
+  <canvas id="confetti"></canvas>
+
+  <h1>🎂 ¡Feliz Cumpleaños, Susana! 🎉</h1>
+  <button onclick="mostrarCarta()">Leer tu carta 💌</button>
+
+  <div id="carta">
+    <!-- 💖 Aquí puedes escribir tu carta personalizada -->
+    <p>Querida Susana,</p>
+    <p>
+      se que no deberia estar haciendo esto, pero se que te gusta que te sorprendan y hoy es un día especial.
+      Quiero desearte un cumpleaños lleno de alegría, amor y momentos inolvidables.Eres la mejor persona que eh conocido aunque nuestra relacion
+      haya sido muy corta y se que quedaron muchas cosas or hacer y momenos por vivir juntos, sin embargo
+      cada momento fue especial para mi, te extraño con mivida y aunqeue a estas horas del partido ya no hay vuekta atras quiero que nuca olvides que te amo con mi alma y que ceuntas con migo hoy y siempre
+      solo queda desearte una muy feliz vida y que cumplas muchos mas.
+    <p>
+      ¡Feliz cumpleaños! 🎂✨
+    </p>
+    <p>Con mucho cariño,<br>💌 El hombre que mas te ama</p>
+  </div>
+
+  <script>
+    // ✨ Mostrar/ocultar carta
+    function mostrarCarta() {
+      const carta = document.getElementById("carta");
+      carta.classList.toggle("mostrar");
+    }
+
+    // 🎊 Animación de confeti
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let confettis = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function crearConfeti() {
+      const colores = ["#ff4081", "#f50057", "#ff80ab", "#ffd1dc", "#ffb6c1", "#ffcc80", "#b388ff"];
+      for (let i = 0; i < 200; i++) {
+        confettis.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 4,
+          color: colores[Math.floor(Math.random() * colores.length)],
+          velocidadY: Math.random() * 3 + 2,
+          velocidadX: Math.random() * 1 - 0.5,
+          opacidad: Math.random() * 0.5 + 0.5,
+        });
+      }
+    }
+
+    function dibujarConfeti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettis.forEach(c => {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, 2 * Math.PI);
+        ctx.fillStyle = c.color;
+        ctx.globalAlpha = c.opacidad;
+        ctx.fill();
+        ctx.closePath();
+
+        c.y += c.velocidadY;
+        c.x += c.velocidadX;
+
+        if (c.y > canvas.height) {
+          c.y = -10;
+          c.x = Math.random() * canvas.width;
+        }
+      });
+      requestAnimationFrame(dibujarConfeti);
+    }
+
+    crearConfeti();
+    dibujarConfeti();
+  </script>
+</body>
+</html>
